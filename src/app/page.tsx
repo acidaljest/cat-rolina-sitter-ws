@@ -5,7 +5,6 @@ import { titleFont } from './config/fonts';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { FaWhatsapp, FaInstagram } from 'react-icons/fa';
-import Link from 'next/link';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -43,33 +42,6 @@ const cats = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#e1d5c5] bg-opacity-90 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23391502%22%20fill-opacity%3D%220.05%22%20fill-rule%3D%22evenodd%22%3E%3Ccircle%20cx%3D%223%22%20cy%3D%223%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%223%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')] pt-16">
-      {/* Navigation Bar */}
-      <header className="fixed top-0 left-0 right-0 bg-[#391502] text-white z-50 shadow-md">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <Link href="/" className={`${titleFont.className} text-xl font-bold`}>
-                Cat-Rolina Sitter
-              </Link>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/" className="hover:text-[#e1d5c5] transition-colors">
-                Inicio
-              </Link>
-              <Link href="/servicios" className="hover:text-[#e1d5c5] transition-colors">
-                Servicios
-              </Link>
-              <Link href="/gatos" className="hover:text-[#e1d5c5] transition-colors">
-                Nuestros Gatos
-              </Link>
-              <Link href="/contacto" className="hover:text-[#e1d5c5] transition-colors">
-                Contacto
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="relative h-[500px] flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-r from-[#391502] to-[#c44400] opacity-95" />
