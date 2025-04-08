@@ -1,19 +1,15 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-
-const COLORS = {
-  primary: '#c44400',
-  secondary: '#391502',
-  white: '#ffffff',
-};
+import { ThemeToggle } from './ThemeToggle';
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Manejo de tecla Escape para cerrar el menú
+  // Manejo de tecla Escape y scroll
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isMenuOpen) {
@@ -21,8 +17,16 @@ export function Navbar() {
       }
     };
 
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
     document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [isMenuOpen]);
 
   // Prevenir scroll cuando el menú móvil está abierto
@@ -35,56 +39,64 @@ export function Navbar() {
   }, [isMenuOpen]);
 
   return (
-    <header className="fixed w-full z-50 bg-white/90 backdrop-blur-sm shadow-sm">
+    <header className={`fixed w-full z-50 bg-[--card-background]/90 backdrop-blur-sm transition-all duration-300 ${
+      isScrolled ? 'shadow-md' : ''
+    }`}>
       {/* Skip Link para accesibilidad */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-primary"
+        className="skip-link"
       >
         Saltar al contenido principal
       </a>
 
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Navegación principal">
-        <div className="flex justify-between h-16">
-          <div className="flex-shrink-0 flex items-center">
-            <Link href="/" aria-label="Inicio - Cat.rolina Sitter">
-              <Image
-                src="/imgs/LogoCRS.png"
-                alt="Cat.rolina Sitter Logo"
-                width={48}
-                height={48}
-                className="rounded-full h-12 w-12 object-cover border-2 border-[#c44400] hover:border-[#391502] transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-[#c44400] focus:outline-none"
-                priority
-              />
-            </Link>
-          </div>
+      <div className="max-w-7xl mx-auto px-4">
+        <nav className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/imgs/LogoCRS.png"
+              alt="Cat.rolina Sitter Logo"
+              width={40}
+              height={40}
+              className="transform hover:scale-110 transition-transform duration-200"
+            />
+          </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8" role="menubar">
-            <Link
-              href="/#catsitters"
-              className="text-[#391502] hover:text-[#c44400] transition-colors focus:ring-2 focus:ring-[#c44400] focus:outline-none p-2 rounded"
-              role="menuitem"
-            >
-              Catsitters
-            </Link>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
             <Link
               href="/#servicios"
-              className="text-[#391502] hover:text-[#c44400] transition-colors focus:ring-2 focus:ring-[#c44400] focus:outline-none p-2 rounded"
-              role="menuitem"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
             >
               Servicios
             </Link>
             <Link
+              href="/#catsitters"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+            >
+              Nuestros Catsitters
+            </Link>
+            <Link
+              href="/#testimonios"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+            >
+              Testimonios
+            </Link>
+            <Link
               href="/#contacto"
-              className="text-[#391502] hover:text-[#c44400] transition-colors focus:ring-2 focus:ring-[#c44400] focus:outline-none p-2 rounded"
-              role="menuitem"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
             >
               Contacto
             </Link>
+            <ThemeToggle />
             <button
-              className="bg-[#c44400] text-white px-4 py-2 rounded-full hover:bg-[#391502] transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-[#c44400] focus:outline-none"
-              role="menuitem"
+              className="btn-primary"
+              onClick={() => {
+                const element = document.getElementById('contacto');
+                element?.scrollIntoView({ behavior: 'smooth' });
+                element?.focus();
+              }}
               aria-label="Reservar servicio de catsitter"
             >
               Reserva Ahora
@@ -92,23 +104,23 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center gap-4">
+            <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-[#391502] hover:text-[#c44400] transition-colors p-2 rounded focus:ring-2 focus:ring-[#c44400] focus:outline-none"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors p-2 rounded focus:ring-2 focus:ring-[--focus-ring-color] focus:outline-none"
               aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
             >
               <svg
-                className="h-6 w-6"
+                className="w-6 h-6"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                aria-hidden="true"
               >
                 {isMenuOpen ? (
                   <path d="M6 18L18 6M6 6l12 12" />
@@ -118,49 +130,63 @@ export function Navbar() {
               </svg>
             </button>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      {/* Mobile Menu */}
-      <div
-        id="mobile-menu"
-        className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-white/95 backdrop-blur-sm border-t border-gray-200`}
-        role="menu"
-        aria-label="Menú móvil"
-      >
-        <div className="px-4 pt-2 pb-3 space-y-3">
-          <Link
-            href="/#catsitters"
-            className="block text-[#391502] hover:text-[#c44400] transition-colors py-2 focus:ring-2 focus:ring-[#c44400] focus:outline-none rounded"
-            onClick={() => setIsMenuOpen(false)}
-            role="menuitem"
-          >
-            Catsitters
-          </Link>
-          <Link
-            href="/#servicios"
-            className="block text-[#391502] hover:text-[#c44400] transition-colors py-2 focus:ring-2 focus:ring-[#c44400] focus:outline-none rounded"
-            onClick={() => setIsMenuOpen(false)}
-            role="menuitem"
-          >
-            Servicios
-          </Link>
-          <Link
-            href="/#contacto"
-            className="block text-[#391502] hover:text-[#c44400] transition-colors py-2 focus:ring-2 focus:ring-[#c44400] focus:outline-none rounded"
-            onClick={() => setIsMenuOpen(false)}
-            role="menuitem"
-          >
-            Contacto
-          </Link>
-          <button
-            className="w-full text-center bg-[#c44400] text-white px-4 py-2 rounded-full hover:bg-[#391502] transition-colors mt-4 focus:ring-2 focus:ring-offset-2 focus:ring-[#c44400] focus:outline-none"
-            onClick={() => setIsMenuOpen(false)}
-            role="menuitem"
-            aria-label="Reservar servicio de catsitter"
-          >
-            Reserva Ahora
-          </button>
+        {/* Mobile Menu */}
+        <div
+          id="mobile-menu"
+          className={`md:hidden fixed inset-x-0 top-16 bg-[--card-background] transition-transform duration-300 transform ${
+            isMenuOpen ? 'translate-y-0' : '-translate-y-full'
+          }`}
+          aria-hidden={!isMenuOpen}
+        >
+          <div className="p-4 space-y-4 shadow-lg">
+            <Link
+              href="/#servicios"
+              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              onClick={() => setIsMenuOpen(false)}
+              role="menuitem"
+            >
+              Servicios
+            </Link>
+            <Link
+              href="/#catsitters"
+              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              onClick={() => setIsMenuOpen(false)}
+              role="menuitem"
+            >
+              Nuestros Catsitters
+            </Link>
+            <Link
+              href="/#testimonios"
+              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              onClick={() => setIsMenuOpen(false)}
+              role="menuitem"
+            >
+              Testimonios
+            </Link>
+            <Link
+              href="/#contacto"
+              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              onClick={() => setIsMenuOpen(false)}
+              role="menuitem"
+            >
+              Contacto
+            </Link>
+            <button
+              className="w-full text-center btn-primary mt-4"
+              onClick={() => {
+                setIsMenuOpen(false);
+                const element = document.getElementById('contacto');
+                element?.scrollIntoView({ behavior: 'smooth' });
+                element?.focus();
+              }}
+              role="menuitem"
+              aria-label="Reservar servicio de catsitter"
+            >
+              Reserva Ahora
+            </button>
+          </div>
         </div>
       </div>
     </header>
