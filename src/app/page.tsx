@@ -256,18 +256,20 @@ export default function Home() {
               {cats.map((cat) => (
                 <SwiperSlide key={cat.id}>
                   <div 
-                    className="card h-[450px] animate-fade-in"
+                    className="card h-[450px] animate-fade-in bg-white rounded-lg shadow-md overflow-hidden"
                     role="article"
                     aria-labelledby={`cat-name-${cat.id}`}
                     tabIndex={0}
                   >
                     <div className="relative h-64">
-                      {!imagesLoaded[cat.image] && <div className="absolute inset-0 skeleton-box rounded-t-lg" />}
+                      {!imagesLoaded[cat.image] && (
+                        <div className="absolute inset-0 bg-[#f9f5f1] animate-pulse rounded-t-lg" />
+                      )}
                       <Image
                         src={cat.image}
                         alt={`${cat.name}, ${cat.description}`}
                         fill
-                        className={`object-cover transition-opacity duration-300 ${
+                        className={`object-cover transition-all duration-500 ${
                           imagesLoaded[cat.image] ? 'opacity-100' : 'opacity-0'
                         }`}
                         priority={cat.id <= 3}

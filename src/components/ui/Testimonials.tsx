@@ -32,13 +32,13 @@ const testimonials = [
 export function Testimonials() {
   return (
     <section 
-      className="bg-[--card-background] py-16"
+      className="bg-[#f9f5f1] py-16"
       aria-labelledby="testimonials-title"
     >
       <div className="max-w-7xl mx-auto px-4">
         <h2 
           id="testimonials-title"
-          className="text-3xl font-bold text-center mb-12 text-[--text-primary]"
+          className="text-3xl font-bold text-center mb-12 text-[#391502]"
         >
           Lo que dicen nuestros clientes
         </h2>
@@ -68,12 +68,12 @@ export function Testimonials() {
         >
           {testimonials.map((testimonial) => (
             <SwiperSlide key={testimonial.id}>
-              <div className="testimonial-card flex flex-col h-full">
-                <div className="mb-4 text-[--primary]">
+              <div className="testimonial-card bg-white rounded-lg shadow-md p-6 flex flex-col h-full border border-[#e1d5c5]">
+                <div className="mb-4 text-[#c44400]">
                   <FaQuoteLeft className="w-8 h-8" aria-hidden="true" />
                 </div>
                 <blockquote className="flex-grow mb-6">
-                  <p className="italic text-[--text-primary]">{testimonial.text}</p>
+                  <p className="italic text-[#391502]">{testimonial.text}</p>
                 </blockquote>
                 <footer className="flex items-center gap-4">
                   <div className="relative w-12 h-12 rounded-full overflow-hidden">
@@ -85,10 +85,10 @@ export function Testimonials() {
                     />
                   </div>
                   <div>
-                    <cite className="not-italic font-semibold text-[--text-primary]">
+                    <cite className="not-italic font-semibold text-[#391502]">
                       {testimonial.name}
                     </cite>
-                    <div className="flex text-[--primary]" aria-label={`${testimonial.rating} de 5 estrellas`}>
+                    <div className="flex text-[#c44400]" aria-label={`${testimonial.rating} de 5 estrellas`}>
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <span key={i} className="text-lg">★</span>
                       ))}
