@@ -3,61 +3,128 @@
 @tailwind utilities;
 
 :root {
-  --primary: #274494;
+  --primary: #c44400;
+  --secondary: #391502;
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-rgb: 255, 255, 255;
+
+  /* Variables de espaciado consistentes */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Variables para mejor accesibilidad */
+  --focus-ring-color: #c44400;
+  --focus-ring-offset: 2px;
 }
-/* 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
+/* Estilos base para mejor accesibilidad */
+@layer base {
+  /* Mejor contraste para texto */
+  body {
+    @apply text-gray-900 bg-white antialiased;
+    color-scheme: light;
   }
-} */ 
 
-body {
-  color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-start-rgb))
-      )
-      rgb(var(--background-end-rgb)) */
+  /* Outline visible para navegación por teclado */
+  :focus-visible {
+    @apply outline-none ring-2 ring-[--focus-ring-color] ring-offset-[--focus-ring-offset];
+  }
+
+  /* Estilos para texto seleccionado */
+  ::selection {
+    @apply bg-[--primary] text-white;
+  }
+
+  /* Mejoras de legibilidad */
+  p, li {
+    @apply leading-relaxed;
+  }
+
+  /* Ajustes para usuarios que prefieren menos movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
+/* Componentes con accesibilidad mejorada */
+@layer components {
+  .btn-primary {
+    @apply bg-[--primary] text-white py-2 px-4 rounded-full
+           hover:bg-[--secondary] 
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed
+           transition-colors duration-200
+           font-medium;
+  }
 
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 py-2 px-4 rounded-full
+           hover:bg-gray-200
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed
+           transition-colors duration-200
+           font-medium;
+  }
 
+  /* Enlaces con mejor accesibilidad */
+  .link {
+    @apply text-[--primary]
+           hover:text-[--secondary]
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] focus:ring-offset-2
+           underline underline-offset-2
+           transition-colors duration-200;
+  }
+
+  /* Tarjetas accesibles */
+  .card {
+    @apply bg-white p-6 rounded-lg shadow-md
+           hover:shadow-lg
+           focus-within:ring-2 focus-within:ring-[--focus-ring-color]
+           transition-shadow duration-200;
+  }
+
+  /* Skip link para accesibilidad */
+  .skip-link {
+    @apply sr-only focus:not-sr-only
+           focus:fixed focus:top-0 focus:left-0
+           focus:z-50 focus:p-4
+           focus:bg-white focus:text-[--primary]
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color];
+  }
+}
+
+/* Utilidades personalizadas */
+@layer utilities {
+  .visually-hidden {
+    @apply sr-only;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] focus:ring-offset-2;
+  }
+}
+
+/* Animaciones optimizadas para accesibilidad */
 @keyframes fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
-} 
-
-@-webkit-keyframes fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .fade-in {
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
+  animation: fadeIn 0.2s ease-out;
 }
 
-
-.btn-primary {
-  @apply bg-blue-600 hover:bg-blue-800 text-white py-2 px-4 rounded transition-all;
-}
-
-.btn-secondary {
-  @apply bg-gray-200 hover:bg-gray-300 text-black py-2 px-4 rounded transition-all;
-}
-
-.prueba {
-  background-color: blue;
+/* Solo aplicar animaciones si el usuario no ha solicitado reducir el movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-in {
+    @apply fade-in;
+  }
 }
