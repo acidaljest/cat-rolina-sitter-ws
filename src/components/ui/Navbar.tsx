@@ -50,48 +50,49 @@ export function Navbar() {
         Saltar al contenido principal
       </a>
 
-      <div className="max-w-7xl mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-4 tablet:px-6">
+        <nav className="flex items-center justify-between h-16 tablet:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/imgs/LogoCRS.png"
+              src="/imgs/LogoCRS.WebP"
               alt="Cat.rolina Sitter Logo"
               width={40}
               height={40}
-              className="transform hover:scale-110 transition-transform duration-200"
+              className="w-10 h-10 tablet:w-12 tablet:h-12 transform hover:scale-110 transition-transform duration-200"
+              priority
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-4 tablet:gap-6 tablet-landscape:gap-8">
             <Link
               href="/#servicios"
-              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded px-2 py-1 text-base tablet:text-lg"
             >
               Servicios
             </Link>
             <Link
               href="/#catsitters"
-              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded px-2 py-1 text-base tablet:text-lg"
             >
               Nuestros Catsitters
             </Link>
             <Link
               href="/#testimonios"
-              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded px-2 py-1 text-base tablet:text-lg"
             >
               Testimonios
             </Link>
             <Link
               href="/#contacto"
-              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              className="text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded px-2 py-1 text-base tablet:text-lg"
             >
               Contacto
             </Link>
             <ThemeToggle />
             <button
-              className="btn-primary"
+              className="btn-primary text-base tablet:text-lg"
               onClick={() => {
                 const element = document.getElementById('contacto');
                 element?.scrollIntoView({ behavior: 'smooth' });
@@ -114,7 +115,7 @@ export function Navbar() {
               aria-controls="mobile-menu"
             >
               <svg
-                className="w-6 h-6"
+                className="w-6 h-6 tablet:w-8 tablet:h-8"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -135,15 +136,15 @@ export function Navbar() {
         {/* Mobile Menu */}
         <div
           id="mobile-menu"
-          className={`md:hidden fixed inset-x-0 top-16 bg-[--card-background] transition-transform duration-300 transform ${
+          className={`md:hidden fixed inset-x-0 top-16 tablet:top-20 bg-[--card-background] transition-transform duration-300 transform ${
             isMenuOpen ? 'translate-y-0' : '-translate-y-full'
           }`}
           aria-hidden={!isMenuOpen}
         >
-          <div className="p-4 space-y-4 shadow-lg">
+          <div className="p-4 tablet:p-6 space-y-4 tablet:space-y-6 shadow-lg">
             <Link
               href="/#servicios"
-              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded px-2 py-1 text-lg tablet:text-xl"
               onClick={() => setIsMenuOpen(false)}
               role="menuitem"
             >
@@ -151,7 +152,7 @@ export function Navbar() {
             </Link>
             <Link
               href="/#catsitters"
-              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded px-2 py-1 text-lg tablet:text-xl"
               onClick={() => setIsMenuOpen(false)}
               role="menuitem"
             >
@@ -159,7 +160,7 @@ export function Navbar() {
             </Link>
             <Link
               href="/#testimonios"
-              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded px-2 py-1 text-lg tablet:text-xl"
               onClick={() => setIsMenuOpen(false)}
               role="menuitem"
             >
@@ -167,14 +168,14 @@ export function Navbar() {
             </Link>
             <Link
               href="/#contacto"
-              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded"
+              className="block text-[--text-primary] hover:text-[--primary] transition-colors focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] rounded px-2 py-1 text-lg tablet:text-xl"
               onClick={() => setIsMenuOpen(false)}
               role="menuitem"
             >
               Contacto
             </Link>
             <button
-              className="w-full text-center btn-primary mt-4"
+              className="w-full text-center btn-primary mt-4 tablet:mt-6 text-lg tablet:text-xl py-3 tablet:py-4"
               onClick={() => {
                 setIsMenuOpen(false);
                 const element = document.getElementById('contacto');

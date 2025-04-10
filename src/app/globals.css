@@ -11,17 +11,28 @@
   --focus-ring-color: #c44400;
   --skeleton-background: rgba(57, 21, 2, 0.1);
 
-  /* Espaciado consistente */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
+  /* Espaciado responsivo */
+  --spacing-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --spacing-sm: clamp(0.5rem, 1vw, 1rem);
+  --spacing-md: clamp(1rem, 2vw, 1.5rem);
+  --spacing-lg: clamp(1.5rem, 3vw, 2rem);
+  --spacing-xl: clamp(2rem, 4vw, 3rem);
+
+  /* Tipografía responsiva */
+  --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+  --font-size-xl: clamp(1.25rem, 1.125rem + 0.75vw, 1.5rem);
+  --font-size-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
+  --font-size-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 2.5rem);
 
   /* Variables para mejor accesibilidad */
   --focus-ring-offset: 4px;
   --focus-ring-width: 3px;
   --input-border: rgba(57, 21, 2, 0.2);
+  --container-padding: max(1rem, env(safe-area-inset-left));
+  --content-width: min(100% - 2rem, 65ch);
 }
 
 [data-theme='dark'] {
@@ -36,6 +47,16 @@
 }
 
 @layer base {
+  html {
+    font-size: 16px;
+    @screen tablet {
+      font-size: 17px;
+    }
+    @screen lg {
+      font-size: 18px;
+    }
+  }
+
   body {
     @apply bg-background text-primary;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -54,8 +75,28 @@
     @apply bg-primary text-white;
   }
 
+  h1 {
+    font-size: var(--font-size-3xl);
+    @apply leading-tight mb-6;
+    max-width: var(--content-width);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    @apply leading-tight mb-4;
+    max-width: var(--content-width);
+  }
+
+  h3 {
+    font-size: var(--font-size-xl);
+    @apply leading-snug mb-3;
+    max-width: var(--content-width);
+  }
+
   p, li {
     @apply leading-relaxed text-[--text-primary] transition-colors duration-300;
+    font-size: var(--font-size-base);
+    max-width: var(--content-width);
   }
 
   /* Ajustes para usuarios que prefieren menos movimiento */
@@ -71,7 +112,8 @@
 
 @layer components {
   .btn-primary {
-    @apply px-6 py-2 bg-primary text-white rounded-full 
+    @apply px-4 py-2 tablet:px-6 tablet:py-3 bg-primary text-white rounded-full 
+           text-[var(--font-size-base)]
            hover:bg-[--text-primary] transition-colors duration-300
            focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] focus:ring-offset-2
            disabled:opacity-50 disabled:cursor-not-allowed;
@@ -93,7 +135,19 @@
 
   .card {
     @apply bg-[--card-background] rounded-lg shadow-lg overflow-hidden
+           p-4 tablet:p-6
            hover:shadow-xl transition-shadow duration-300;
+  }
+
+  .container {
+    @apply px-4 mx-auto;
+    max-width: 90rem;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+
+  .section {
+    @apply py-8 md:py-12 tablet:py-16;
   }
 
   .skip-link {
