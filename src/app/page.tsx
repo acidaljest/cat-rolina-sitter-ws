@@ -158,6 +158,15 @@ export default function Home() {
         className="relative h-[500px] flex items-center justify-center animate-fade-in"
         aria-label="Bienvenida a Cat.rolina Sitter"
       >
+        <Image
+          src="/imgs/Banner1.WebP"
+          alt="Banner de bienvenida Cat.rolina Sitter"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          quality={90}
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-[#391502] to-[#c44400] opacity-95" aria-hidden="true" />
         <div className="relative z-10 text-center text-white px-4">
           <h1 className={`${titleFont.className} text-5xl font-bold mb-4 animate-slide-in slide-in-left slide-in-active`}>
