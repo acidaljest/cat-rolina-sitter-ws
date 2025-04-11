@@ -9,8 +9,27 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: "var(--primary)",
+        secondary: "var(--text-secondary)",
         background: "var(--background)",
         foreground: "var(--foreground)",
+      },
+      borderColor: {
+        primary: "var(--primary)",
+        secondary: "var(--text-secondary)",
+      },
+      backgroundColor: {
+        primary: "var(--primary)",
+        secondary: "var(--text-secondary)",
+        card: "var(--card-background)",
+      },
+      textColor: {
+        primary: "var(--text-primary)",
+        secondary: "var(--text-secondary)",
+      },
+      ringColor: {
+        primary: "var(--primary)",
+        focus: "var(--focus-ring-color)",
       },
     },
   },

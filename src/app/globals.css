@@ -3,61 +3,241 @@
 @tailwind utilities;
 
 :root {
-  --primary: #274494;
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background: #e1d5c5;
+  --text-primary: #391502;
+  --text-secondary: #391502aa;
+  --primary: #c44400;
+  --card-background: #ffffff;
+  --focus-ring-color: #c44400;
+  --skeleton-background: rgba(57, 21, 2, 0.1);
+
+  /* Espaciado consistente */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Variables para mejor accesibilidad */
+  --focus-ring-offset: 4px;
+  --focus-ring-width: 3px;
+  --input-border: rgba(57, 21, 2, 0.2);
 }
-/* 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
+[data-theme='dark'] {
+  --background: #1a1a1a;
+  --text-primary: #e1d5c5;
+  --text-secondary: #e1d5c5aa;
+  --primary: #ff5500;
+  --card-background: #2a2a2a;
+  --focus-ring-color: #ff5500;
+  --input-border: rgba(225, 213, 197, 0.2);
+  --skeleton-background: rgba(225, 213, 197, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-background text-primary;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
-} */ 
 
-body {
-  color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-start-rgb))
-      )
-      rgb(var(--background-end-rgb)) */
+  [data-theme="dark"] body {
+    color-scheme: dark;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-[3px] ring-[--focus-ring-color] ring-offset-4;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+
+  ::selection {
+    @apply bg-primary text-white;
+  }
+
+  p, li {
+    @apply leading-relaxed text-[--text-primary] transition-colors duration-300;
+  }
+
+  /* Ajustes para usuarios que prefieren menos movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
+@layer components {
+  .btn-primary {
+    @apply px-6 py-2 bg-primary text-white rounded-full 
+           hover:bg-[--text-primary] transition-colors duration-300
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color] focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
 
+  .btn-secondary {
+    @apply px-6 py-2 bg-transparent border-2 border-[--primary] text-[--primary]
+           rounded-full hover:bg-[--primary] hover:text-white transition-colors duration-300
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
 
+  .link {
+    @apply text-[--primary]
+           hover:text-[--secondary] hover:underline
+           focus:outline-none focus:ring-[3px] focus:ring-[--focus-ring-color] focus:ring-offset-4
+           transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-[--card-background] rounded-lg shadow-lg overflow-hidden
+           hover:shadow-xl transition-shadow duration-300;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0
+           focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-black
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color];
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    @apply text-[--primary] transition-colors duration-300;
+  }
+
+  .swiper-pagination-bullet {
+    @apply bg-[--primary] opacity-30 transition-opacity duration-300;
+  }
+
+  .swiper-pagination-bullet-active {
+    @apply opacity-100;
+  }
+
+  .swiper-button-disabled {
+    @apply opacity-30 cursor-not-allowed;
+  }
+
+  .theme-toggle {
+    @apply p-2 rounded-full transition-colors duration-300
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color];
+  }
+
+  .theme-toggle:hover {
+    background-color: rgba(57, 21, 2, 0.1);
+  }
+
+  [data-theme='dark'] .theme-toggle:hover {
+    background-color: rgba(225, 213, 197, 0.1);
+  }
+
+  .form-input {
+    @apply w-full px-4 py-2 rounded-lg bg-[--card-background] text-[--text-primary]
+           focus:outline-none focus:ring-2 focus:ring-[--focus-ring-color]
+           disabled:opacity-50 disabled:cursor-not-allowed
+           transition-colors duration-300;
+    border: 1px solid var(--input-border);
+  }
+
+  .testimonial-card {
+    @apply bg-[--card-background] p-6 rounded-lg shadow-md;
+  }
+
+  .skeleton-box {
+    @apply animate-pulse;
+    background-color: var(--skeleton-background);
+  }
+}
+
+@layer utilities {
+  .visually-hidden {
+    @apply sr-only;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-[3px] focus:ring-[--focus-ring-color] focus:ring-offset-4;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.5s ease-out;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+/* Animations */
 @keyframes fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
-} 
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-@-webkit-keyframes fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -468px 0; }
+  100% { background-position: 468px 0; }
+}
+
+.skeleton-box {
+  @apply animate-pulse;
+  background-color: var(--skeleton-background);
 }
 
 .fade-in {
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
+  animation: fadeIn 0.2s ease-out;
 }
 
-
-.btn-primary {
-  @apply bg-blue-600 hover:bg-blue-800 text-white py-2 px-4 rounded transition-all;
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.btn-secondary {
-  @apply bg-gray-200 hover:bg-gray-300 text-black py-2 px-4 rounded transition-all;
+.animate-slide-in {
+  animation: slideIn 0.5s ease-out;
 }
 
-.prueba {
-  background-color: red;
+.animate-pulse-slow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-in {
+    @apply fade-in;
+  }
+  
+  .animate-slide-in {
+    @apply transition-all duration-300 transform;
+  }
+  
+  .slide-in-left {
+    @apply -translate-x-4 opacity-0;
+  }
+  
+  .slide-in-right {
+    @apply translate-x-4 opacity-0;
+  }
+  
+  .slide-in-active {
+    @apply translate-x-0 opacity-100;
+  }
 }
