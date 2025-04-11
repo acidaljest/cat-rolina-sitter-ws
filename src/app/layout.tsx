@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/ui/Navbar";
+import { BackToTop } from "@/components/ui/BackToTop";
 import { titleFont, geistSans } from "./config/fonts";
 
 export const metadata: Metadata = {
@@ -220,6 +221,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <BackToTop />
       </body>
     </html>
   );
