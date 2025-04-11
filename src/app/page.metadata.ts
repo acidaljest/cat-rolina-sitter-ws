@@ -1,22 +1,42 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Inicio | Cuidado profesional de gatos a domicilio',
-  description: 'Cat.rolina Sitter ofrece servicios profesionales de cuidado de gatos a domicilio en Santiago. Catsitters certificados, seguimiento diario y atención personalizada.',
+  title: 'Cat.rolina Sitter | Cuidado Profesional de Gatos a Domicilio en Santiago',
+  description: 'Servicio premium de cuidado de gatos a domicilio en Santiago. Catsitters certificados 24/7, seguimiento con fotos diarias, y cuidados personalizados en el ambiente seguro del hogar de tu gato. ¡Reserva ahora!',
+  keywords: [
+    'cuidado de gatos santiago',
+    'catsitter profesional',
+    'cuidador gatos a domicilio',
+    'servicio cuidado mascotas',
+    'cat sitter certificado',
+    'cuidado felino personalizado',
+    'guardería gatos santiago',
+    'pet sitter gatos'
+  ],
+  alternates: {
+    canonical: 'https://carolinasitter.com'
+  },
   openGraph: {
-    title: 'Cat.rolina Sitter | Cuidado profesional de gatos a domicilio',
-    description: 'Servicio profesional de cuidadores de gatos certificados en Santiago. Atención personalizada, seguimiento diario y cuidado en el ambiente familiar de tu gato.',
+    title: 'Cat.rolina Sitter | Cuidado Profesional de Gatos a Domicilio',
+    description: 'Cuidado experto y personalizado para tu gato en la comodidad de su hogar. Catsitters certificados, seguimiento con fotos diarias y disponibilidad 24/7.',
     images: [
       {
-        url: '/imgs/Banner1.png',
+        url: '/imgs/Banner1.WebP',
         width: 1200,
         height: 630,
         alt: 'Cat.rolina Sitter - Servicio profesional de cuidado de gatos'
       }
     ],
     type: 'website',
+    locale: 'es_CL',
+    url: 'https://carolinasitter.com',
+    siteName: 'Cat.rolina Sitter'
   },
-  alternates: {
-    canonical: 'https://carolinasitter.com'
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cat.rolina Sitter | Cuidado Profesional de Gatos',
+    description: 'Cuidado experto para tu gato en la comodidad de su hogar. Catsitters certificados disponibles 24/7.',
+    images: ['/imgs/Banner1.WebP'],
+    creator: '@carolinasitter'
   }
 };

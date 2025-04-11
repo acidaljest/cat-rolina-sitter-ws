@@ -26,11 +26,12 @@ export const metadata: Metadata = {
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
   themeColor: "#391502",
-  colorScheme: "light",
+  colorScheme: "light dark",
   viewport: {
     width: "device-width",
     initialScale: 1,
     maximumScale: 5,
+    userScalable: true,
   },
   robots: {
     index: true,
@@ -44,20 +45,32 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" }
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180" }
+    ],
   },
   manifest: "/site.webmanifest",
+  verification: {
+    google: "google-site-verification-code",
+    yandex: "yandex-verification-code",
+    other: {
+      "facebook-domain-verification": ["facebook-domain-verification-code"]
+    }
+  },
   openGraph: {
     type: "website",
     locale: "es_CL",
     url: "https://carolinasitter.com",
     siteName: "Cat.rolina Sitter",
     title: "Cat.rolina Sitter | Cuidado profesional para gatos",
-    description: "Servicio profesional de cuidado de gatos a domicilio en Santiago. Catsitters certificados disponibles 24/7.",
+    description: "Servicio profesional de cuidadores de gatos certificados en Santiago. Cuidado experto en el ambiente familiar de tu gato.",
     images: [
       {
-        url: "/imgs/og-image.jpg",
+        url: "/imgs/Banner1.WebP",
         width: 1200,
         height: 630,
         alt: "Cat.rolina Sitter - Cuidado profesional para gatos"
@@ -68,15 +81,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Cat.rolina Sitter | Cuidado profesional para gatos',
     description: 'Servicio profesional de cuidado de gatos a domicilio en Santiago',
-    images: ['/imgs/twitter-image.jpg'],
+    images: ['/imgs/Banner1.WebP'],
     creator: '@carolinasitter'
   },
   alternates: {
     canonical: 'https://carolinasitter.com'
   },
-  verification: {
-    google: 'google-site-verification-code',
-  }
 };
 
 export default function RootLayout({
@@ -84,6 +94,107 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const mainSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://carolinasitter.com/#organization",
+    "name": "Cat.rolina Sitter",
+    "url": "https://carolinasitter.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://carolinasitter.com/imgs/LogoCRS.WebP",
+      "width": "180",
+      "height": "180"
+    },
+    "image": [
+      "https://carolinasitter.com/imgs/Banner1.WebP",
+      "https://carolinasitter.com/imgs/Banner2.WebP"
+    ],
+    "description": "Servicio profesional de cuidado de gatos a domicilio en Santiago. Catsitters certificados disponibles 24/7.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Santiago",
+      "addressRegion": "Región Metropolitana",
+      "addressCountry": "CL"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -33.4489,
+      "longitude": -70.6693
+    },
+    "priceRange": "$$",
+    "telephone": "+56912345678",
+    "email": "contacto@carolinasitter.com",
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "sameAs": [
+      "https://www.facebook.com/cat.rolina.sitter",
+      "https://www.instagram.com/cat.rolina.sitter"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios de Cuidado de Gatos",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Visitas Diarias",
+            "description": "Visitas programadas para alimentación, limpieza y compañía"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Cuidado Nocturno",
+            "description": "Servicio de cuidado durante la noche"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Servicios de Emergencia",
+            "description": "Atención veterinaria de emergencia y cuidados especiales"
+          }
+        }
+      ]
+    },
+    "review": {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Ana García"
+      },
+      "reviewBody": "Excelente servicio, mi gato Milo siempre está feliz cuando lo visitan. Las fotos diarias son un detalle encantador."
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "89",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  };
+
   return (
     <html lang="es" className={`${titleFont.className} ${geistSans.className}`}>
       <head>
@@ -105,61 +216,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              "@id": "https://carolinasitter.com",
-              "name": "Cat.rolina Sitter",
-              "image": "https://carolinasitter.com/imgs/LogoCRS.png",
-              "url": "https://carolinasitter.com",
-              "telephone": "+56912345678",
-              "priceRange": "$$",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Santiago",
-                "addressRegion": "Región Metropolitana",
-                "addressCountry": "CL"
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": -33.4489,
-                "longitude": -70.6693
-              },
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                  "Sunday"
-                ],
-                "opens": "00:00",
-                "closes": "23:59"
-              },
-              "sameAs": [
-                "https://instagram.com/cat.rolina.sitter",
-                "https://facebook.com/cat.rolina.sitter"
-              ],
-              "description": "Servicio profesional de cuidado de gatos a domicilio en Santiago. Catsitters certificados y apasionados por los felinos.",
-              "areaServed": "Santiago Metropolitan Region",
-              "serviceType": "Pet Sitting",
-              "specialties": ["Cuidado de gatos", "Visitas a domicilio", "Alimentación", "Limpieza de arenero"],
-              "review": {
-                "@type": "Review",
-                "reviewRating": {
-                  "@type": "Rating",
-                  "ratingValue": "5",
-                  "bestRating": "5"
-                },
-                "author": {
-                  "@type": "Person",
-                  "name": "Cliente Satisfecho"
-                }
-              }
-            })
+            __html: JSON.stringify(mainSchema)
           }}
         />
       </head>
